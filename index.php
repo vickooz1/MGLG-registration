@@ -177,7 +177,7 @@ function escape(string $value): string
         * { box-sizing: border-box; }
         body { margin: 0; background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; }
         button, input { font: inherit; }
-        .layout { min-height: 100vh; display: grid; grid-template-columns: minmax(360px, 0.85fr) minmax(580px, 1.15fr); }
+        .layout { min-height: 100vh; min-height: 100svh; display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); }
         .story { min-height: 100vh; position: sticky; top: 0; height: 100vh; padding: 34px clamp(28px, 5vw, 72px) 40px; display: flex; flex-direction: column; justify-content: space-between; overflow: hidden; isolation: isolate; color: white; background: var(--forest); }
         .story::before { content: ''; position: absolute; inset: 0; z-index: -2; background: linear-gradient(180deg, rgba(11,34,25,.36), rgba(11,34,25,.84)), url('assets/registration-background.jpeg') center/cover; }
         .story::after { content: ''; position: absolute; z-index: -1; width: 320px; height: 320px; right: -180px; bottom: 13%; border: 1px solid rgba(255,255,255,.2); border-radius: 50%; box-shadow: 0 0 0 34px rgba(255,255,255,.035), 0 0 0 68px rgba(255,255,255,.025); }
@@ -197,8 +197,9 @@ function escape(string $value): string
         .story-footer { color: rgba(255,255,255,.65); font-size: 12px; }
         .form-side { min-width: 0; padding: 28px clamp(26px, 6vw, 88px) 48px; background: radial-gradient(ellipse at top right, rgba(183,214,122,.15), transparent 36%), var(--paper); }
         .mobile-brand { display: none; }
-        .form-wrap { width: min(100%, 690px); margin: 0 auto; animation: arrive .55s .08s ease-out both; }
-        .form-heading { padding: 18px 0 22px; border-bottom: 1px solid var(--line); }
+        .form-wrap { width: min(100%, 720px); margin: 0 auto; animation: arrive .55s .08s ease-out both; }
+        .form-heading { padding: 10px 0 22px; border-bottom: 1px solid var(--line); }
+        .form-logo { display: block; width: min(250px, 72vw); height: auto; margin: 0 0 17px; object-fit: contain; }
         .form-heading .eyebrow { color: #5e7746; }
         h2 { margin: 11px 0 6px; font-family: Manrope, sans-serif; font-size: 29px; line-height: 1.2; letter-spacing: 0; }
         .form-heading p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.55; }
@@ -239,13 +240,13 @@ function escape(string $value): string
         .splash-skip { position: absolute; top: 20px; right: 20px; padding: 10px 16px; color: white; border: 1px solid rgba(255,255,255,.65); border-radius: 4px; background: rgba(0,0,0,.5); font-weight: 700; cursor: pointer; }
         .honeypot { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
         @keyframes arrive { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @media (max-width: 960px) {
+        @media (max-width: 1040px) {
             .layout { grid-template-columns: 1fr; }
-            .story { position: relative; height: auto; min-height: 390px; padding: 22px 26px 27px; }
+            .story { position: relative; top: auto; height: auto; min-height: 360px; padding: 22px clamp(22px, 5vw, 48px) 27px; }
             .story-copy { padding: 55px 0 28px; }
             h1 { max-width: 600px; font-size: 47px; }
             .story-footer { display: none; }
-            .form-side { padding: 12px 26px 38px; }
+            .form-side { padding: 24px clamp(22px, 6vw, 72px) 42px; }
             .form-heading { padding-top: 20px; }
         }
         @media (max-width: 520px) {
@@ -256,7 +257,8 @@ function escape(string $value): string
             .event-meta { gap: 18px; margin-top: 25px; }
             .meta-value { font-size: 14px; }
             .form-side { padding: 8px 20px 32px; }
-            .form-heading { padding-top: 17px; }
+            .form-heading { padding-top: 14px; }
+            .form-logo { width: min(215px, 72vw); margin-bottom: 14px; }
             h2 { font-size: 25px; }
             .fields { grid-template-columns: 1fr; row-gap: 13px; }
             .field.full { grid-column: auto; }
@@ -290,7 +292,6 @@ function escape(string $value): string
         <div class="brand"><span class="brand-mark" aria-hidden="true">M</span><span class="brand-name">MY GENERATION<br>LOVES GOD</span></div>
         <div class="story-copy">
             <span class="eyebrow">A generation gathered</span>
-            <h1>My Generation<br><span>Loves God.</span></h1>
             <p>Come as you are. Meet a community of young people growing in faith, purpose, and love for God.</p>
             <div class="event-meta">
                 <div class="meta-item"><span class="meta-label">When</span><span class="meta-value">18 October 2026</span></div>
@@ -304,6 +305,7 @@ function escape(string $value): string
     <main class="form-side" id="registration">
         <div class="form-wrap">
             <header class="form-heading">
+                <img class="form-logo" src="assets/mglg-favicon.png" alt="My Generation Loves God" width="669" height="376">
                 <span class="eyebrow">Join us in Thika</span>
                 <h2>Register for the gathering</h2>
                 <p>Share a few details so we can welcome you and send your event invitation.</p>
@@ -323,7 +325,7 @@ function escape(string $value): string
                         <input id="name" name="name" type="text" autocomplete="name" maxlength="160" placeholder="Enter Name" value="<?= escape($values['name']) ?>" required>
                     </div>
                     <div class="field">
-                        <label for="institution">Institution / organization <span class="required">*</span></label>
+                        <label for="institution">Institution / organization / Church<span class="required">*</span></label>
                         <input id="institution" name="institution" type="text" maxlength="180" placeholder="Where you study or work" value="<?= escape($values['institution']) ?>" required>
                     </div>
                     <div class="field">
